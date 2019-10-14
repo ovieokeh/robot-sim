@@ -1,0 +1,37 @@
+{
+  "name": "robot-sim",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel public/index.html",
+    "build": "parcel build public/index.html --out-dir build --no-source-maps --no-content-hash"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ovieokeh/robot-sim.git"
+  },
+  "keywords": [
+    "react",
+    "node"
+  ],
+  "author": "Ovie Okeh",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ovieokeh/robot-sim/issues"
+  },
+  "homepage": "https://github.com/ovieokeh/robot-sim#readme",
+  "dependencies": {
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "styled-components": "^4.4.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.5",
+    "@types/react-dom": "^16.9.1",
+    "@types/styled-components": "^4.1.19",
+    "parcel": "^1.12.4",
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^3.6.4"
+  }
+}
