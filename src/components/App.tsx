@@ -2,14 +2,21 @@ import * as React from 'react'
 import styled from 'styled-components'
 import Grid from './Grid'
 import { moveTo, keyMapper, Direction } from '../helpers'
+import useKeydownLister from './useKeydownListener'
 
-const { useState, useEffect } = React
+const { useState } = React
+
 const upperBound = 4
 const lowerBound = 0
 
 const App: React.FC = () => {
   const [currentPos, setCurrentPos] = useState<[number, number]>([0, 0])
   const [currentDirection, setCurrentDirection] = useState<Direction>('RIGHT')
+
+  const moveRobot = (): void => {
+    const newPos = moveTo(currentDirection, currentPos, upperBound, lowerBound)
+    setCurrentPos(newPos)
+  }
 
   const handleKeyDown = (event: KeyboardEvent): void => {
     const newDirection = keyMapper[event.key]
@@ -18,16 +25,16 @@ const App: React.FC = () => {
     if (newDirection !== currentDirection)
       return setCurrentDirection(newDirection)
 
-    const newPos = moveTo(newDirection, currentPos, upperBound, lowerBound)
-
-    setCurrentDirection(newDirection)
-    setCurrentPos(newPos)
+    moveRobot()
   }
 
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [currentDirection, currentPos])
+  useKeydownLister(handleKeyDown, currentDirection, currentPos)
+
+  const handleControlClick = (direction: Direction) => () => {
+    direction === currentDirection
+      ? moveRobot()
+      : setCurrentDirection(direction)
+  }
 
   const handleCellClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -49,15 +56,60 @@ const App: React.FC = () => {
         onCellClick={handleCellClick}
         currentDirection={currentDirection}
       />
+      <Controls>
+        <Button onClick={handleControlClick('UP')}>↑</Button>
+        <div>
+          <Button className="alt" onClick={handleControlClick('LEFT')}>
+            ←
+          </Button>
+          <Button className="alt" onClick={handleControlClick('RIGHT')}>
+            →
+          </Button>
+        </div>
+        <Button onClick={handleControlClick('DOWN')}>↓</Button>
+      </Controls>
+      <small>You can also control the plane with your arrow keys</small>
     </Container>
   )
 }
 
 const Container = styled.main`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 5%;
+`
+
+const Controls = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5% 0;
+  text-align: center;
+`
+
+const Button = styled.button`
+  font-size: 1em;
+  padding: 1em 2em;
+  border-style: none;
+  background-color: #333;
+  color: #ddd;
+  cursor: pointer;
+  outline: 0;
+  max-width: 200px;
+  &:hover {
+    background-color: #ddd;
+    color: #333;
+  }
+  &.alt {
+    max-width: 200px;
+    background-color: #444;
+    &:hover {
+      background-color: #ddd;
+      color: #444;
+    }
+  }
 `
 
 export default App
