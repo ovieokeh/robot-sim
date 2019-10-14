@@ -1,7 +1,7 @@
 {
   "name": "robot-sim",
   "version": "1.0.0",
-  "description": "",
+  "description": "An application that simulates a robot moving in a 5x5 grid",
   "main": "index.js",
   "scripts": {
     "start": "parcel public/index.html",
