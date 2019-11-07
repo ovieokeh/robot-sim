@@ -68,7 +68,7 @@ const App: React.FC = () => {
         </div>
         <Button onClick={handleControlClick('DOWN')}>↓</Button>
       </Controls>
-      <small>You can also control the plane with your arrow keys</small>
+      <span>You can also control the plane with your arrow keys</span>
     </Container>
   )
 }
@@ -85,7 +85,7 @@ const Controls = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 5% 0;
+  margin: 3% 0;
   text-align: center;
 `
 
